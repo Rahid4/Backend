@@ -30,7 +30,7 @@ employeeCtrl.create = async (req, res) => {
 };
 
 
-  employeeCtrl.getAll = async (req, res) => {
+employeeCtrl.getAll = async (req, res) => {
     try {
       
       const employees = await Employee.find();
@@ -40,7 +40,33 @@ employeeCtrl.create = async (req, res) => {
       
       return res.status(500).json({ error: e.message });
     }
-  };
+};
+
+employeeCtrl.edit = async (req, res) => {
+  try {
+    const employeeId = req.params.id;
+    const body = _.pick(req.body, ['name', 'email', 'mobileNo', 'designation', 'gender', 'course', 'image']);
+    
+    const updatedEmployee = await Employee.findByIdAndUpdate(employeeId, body, { new: true });
+    
+    return res.json(updatedEmployee);
+  } catch (e) {
+    return res.status(500).json({ error: e.message });
+  }
+};
+
+employeeCtrl.delete = async (req, res) => {
+  try {
+    const employeeId = req.params.id;
+    
+    const deletedEmployee = await Employee.findByIdAndDelete(employeeId);
+    
+    
+    return res.json({ message: 'Employee deleted successfully' });
+  } catch (e) {
+    return res.status(500).json({ error: e.message });
+  }
+};
 
 
 module.exports = employeeCtrl; 

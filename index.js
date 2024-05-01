@@ -21,6 +21,8 @@ mongoose.connect('mongodb+srv://shaikrahid2001:shaikrahid@cluster0.1btcp3s.mongo
 // apis
 app.post('/api/create',checkSchema(employeeCreateSchema),employeeCltr.create)
 app.get('/api/get',employeeCltr.getAll)
+app.put('/api/edit/:id',checkSchema(employeeCreateSchema),employeeCltr.edit)
+app.delete('/api/delete/:id',employeeCltr.delete)
 
 app.listen(port,()=>{
     console.log('server running on port',port)
